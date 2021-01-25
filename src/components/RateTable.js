@@ -1,8 +1,13 @@
+import { useSelector } from "react-redux";
+import { getName } from "../store/user";
+
 export function RateTable({ currencyData, amount }) {
+  const name = useSelector(getName);
+
   return (
     <table className="ExchangeRate-table">
       <tbody>
-        {Object.entries(currencyData).map(([code, rate]) => {
+        {Object.values(currencyData).map(({ code, rate }) => {
           // NOTE: normally avoid floating point math in JS
           const exchangeAmount = amount * rate || 0.0;
           return (
@@ -18,6 +23,9 @@ export function RateTable({ currencyData, amount }) {
           );
         })}
       </tbody>
+      <tfoot>
+          <tr><td colSPan={2}>Prepared for {name}</td></tr>
+      </tfoot>
     </table>
   );
 }
